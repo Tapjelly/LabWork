@@ -2,7 +2,7 @@
 
 ## Lab 3.1 Take Five and Practice the Command Line
 
-```shell  
+```console  
 cd /03-student/day1/take\_5/  
 mkdir Internal\_Investigation\_Employee\_A  
 cd Internal\_Investigation\_Employee\_A  
