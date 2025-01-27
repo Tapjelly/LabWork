@@ -49,6 +49,7 @@ cat \* \>\> Candy-evidence.txt
 
 ## Learn New Commands
 
-```console  
-wc \-w \* \>\> Connections\_by\_website
+```console
+cd /03-student/day2/learning_new_commands/
+wc \-w \* >> Connections\_by\_website
 ```
