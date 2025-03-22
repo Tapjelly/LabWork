@@ -63,7 +63,7 @@ foreach ($package in $csv) {
 	write-output $package.name removed!
 }
 ```
-# Week 7.2
+# Week 7.3
 ## Create Domain OUs, Users, and Groups
 This one was just using the UI of Server manager > Tools > Active Directory Users and Computers. Because it was so straight forward I am not posting images or a walkthrough.
 Using the UI you just add the OU and sub-OU. Add the users and groups. Assign the users to the groups.
@@ -75,3 +75,31 @@ Under Settings Page Visibility, enter showonly:about;themes.
 Then I needed to add the Sales group to the Remote Desktop Users group in the Active Directory Users and Computers menu.
 From here I log in as system admin and gpupdate to update the new policy. 
 When logged in as the user I have limited access to settings.
+
+# Week 7.4
+## Task Scheduling
+Use the user, azadmin, to create a newly scheduled task. <br>
+Launch the Task Scheduler GUI application from the Start menu.<br>
+Create a new task.<br>
+Navigate to the scheduling section.<br>
+Schedule the task to execute every day.<br>
+Make sure the time is set to execute after a minute or two from your current time (so that we can make sure it executes properly).<br>
+Save your changes to the schedule.<br>
+
+## Invesitgation User Space and Services
+Open Computer Management and navigate to Local Users and Groups. Identify accounts with elevated permissions and propose adjustments.<br>
+
+Next, using file explorer we will investigate common malware hiding spots. <br>
+C:\Windows\Tasks<br>
+C:\Windows\Temp<br>
+C:\Users\<username>\AppData<br>
+
+Using Task Manager and sorting processes by CPU usage. <br>
+Note the top 5 highest-consuming processes. <br>
+Cross-reference their names and details online to confirm legitimacy. <br>
+Use tools like Process Explorer for deeper insights.<br>
+
+Open the Services tool and identify services with unclear or unfamiliar names. 
+Google them to validate their purpose and origin. 
+For any suspicious services, document the service name, description, and executable path.
+
